@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "trickster-math-tricks",
+	"version": "${version}",
+	"name": "Trickster Math Tricks",
+	"description": "Adds more math tricks and fragments into Trickster",
+	"authors": [
+		"TheJebForge"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/trickster-math-tricks",
+		"sources": "https://github.com/TheJebForge/trickster-math-tricks"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/trickster-math-tricks/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.thejebforge.trickster_math_tricks.TricksterMathTricks"
+		],
+		"client": [
+			"com.thejebforge.trickster_math_tricks.TricksterMathTricksClient"
+		]
+	},
+	"mixins": [],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": ">=1.21",
+		"java": ">=21",
+		"fabric-api": "*",
+		"owo": "*",
+		"lavender": "*",
+		"trickster": "*"
+	}
+}

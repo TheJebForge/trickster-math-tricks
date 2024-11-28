@@ -20,6 +20,6 @@ public class QuaternionEulerTrick extends MathDistortTrick {
     public Fragment distort(SpellContext ctx, List<Fragment> fragments) throws BlunderException {
         var quaternion = expectInput(fragments, ModFragmentTypes.QUATERNION, 0).quaternion();
 
-        return new VectorFragment(quaternion.getEulerAnglesXYZ(new Vector3d()));
+        return new VectorFragment(quaternion.getEulerAnglesYXZ(new Vector3d()));
     }
 }

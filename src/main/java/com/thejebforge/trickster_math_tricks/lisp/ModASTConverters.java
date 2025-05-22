@@ -5,12 +5,9 @@ import com.thejebforge.trickster_lisp.transpiler.ast.builder.CallBuilder;
 import com.thejebforge.trickster_math_tricks.TricksterMathTricks;
 import com.thejebforge.trickster_math_tricks.fragment.ModFragmentTypes;
 import com.thejebforge.trickster_math_tricks.fragment.QuaternionFragment;
-import net.fabricmc.loader.api.FabricLoader;
 
 public class ModASTConverters {
     public static void register() {
-        if (!FabricLoader.getInstance().isModLoaded("trickster_lisp")) return;
-
         SpellConverter.CUSTOM_FRAGMENT_CONVERTERS.put(ModFragmentTypes.QUATERNION, fragment -> {
             var quat = ((QuaternionFragment) fragment).quaternion();
             return CallBuilder.builder("quat")

@@ -9,20 +9,17 @@ import dev.enjarai.trickster.spell.SpellContext;
 import dev.enjarai.trickster.spell.blunder.BlunderException;
 import dev.enjarai.trickster.spell.blunder.IncompatibleTypesBlunder;
 import dev.enjarai.trickster.spell.fragment.VectorFragment;
+import dev.enjarai.trickster.spell.type.Signature;
 import org.joml.Quaterniond;
 import org.joml.Vector3d;
 
-import java.util.List;
-
-public class NormalizeTrick extends MathDistortTrick {
+public class NormalizeTrick extends MathDistortTrick<NormalizeTrick> {
     public NormalizeTrick() {
-        super(Pattern.of(3, 4, 5, 6, 3));
+        super(Pattern.of(3, 4, 5, 6, 3), Signature.of(ANY, NormalizeTrick::normalize));
     }
 
-    @Override
-    public Fragment distort(SpellContext spellContext, List<Fragment> list) throws BlunderException {
-        var input = expectInput(list, 0);
 
+    public Fragment normalize(SpellContext spellContext, Fragment input) throws BlunderException {
         return switch (input) {
             case QuaternionFragment quaternion -> new QuaternionFragment(quaternion.quaternion().normalize(new Quaterniond()));
             case VectorFragment vector -> new VectorFragment(vector.vector().normalize(new Vector3d()));

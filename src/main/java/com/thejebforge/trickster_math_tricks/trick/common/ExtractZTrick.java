@@ -13,15 +13,12 @@ import dev.enjarai.trickster.spell.fragment.VectorFragment;
 
 import java.util.List;
 
-public class ExtractZTrick extends MathDistortTrick {
+public class ExtractZTrick extends MathDistortTrick<ExtractZTrick> {
     public ExtractZTrick() {
         super(Pattern.of(0, 5, 8));
     }
 
-    @Override
-    public Fragment distort(SpellContext spellContext, List<Fragment> list) throws BlunderException {
-        var input = expectInput(list, 0);
-
+    public Fragment extract(SpellContext spellContext, Fragment input) throws BlunderException {
         return switch (input) {
             case QuaternionFragment quaternion -> new NumberFragment(quaternion.quaternion().z());
             case VectorFragment vector -> new NumberFragment(vector.vector().z());

@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.thejebforge.trickster_math_tricks.MathUtils.getEntityRotation;
 
-public class CasterQuaternionTrick extends MathTrick {
+public class CasterQuaternionTrick extends MathTrick<CasterQuaternionTrick> {
     public CasterQuaternionTrick() {
         super(Pattern.of(1, 0, 3, 6, 4, 2, 5, 8, 7));
     }

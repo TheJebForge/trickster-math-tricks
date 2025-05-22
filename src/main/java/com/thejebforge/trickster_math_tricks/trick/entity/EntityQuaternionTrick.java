@@ -7,20 +7,22 @@ import dev.enjarai.trickster.spell.Pattern;
 import dev.enjarai.trickster.spell.SpellContext;
 import dev.enjarai.trickster.spell.blunder.BlunderException;
 import dev.enjarai.trickster.spell.blunder.IncompatibleSourceBlunder;
+import dev.enjarai.trickster.spell.blunder.IncompatibleTypesBlunder;
+import dev.enjarai.trickster.spell.fragment.EntityFragment;
 import dev.enjarai.trickster.spell.fragment.FragmentType;
+import dev.enjarai.trickster.spell.type.Signature;
 
 import java.util.List;
 
 import static com.thejebforge.trickster_math_tricks.MathUtils.getEntityRotation;
 
-public class EntityQuaternionTrick extends MathDistortTrick {
+public class EntityQuaternionTrick extends MathDistortTrick<EntityQuaternionTrick> {
     public EntityQuaternionTrick() {
-        super(Pattern.of(0, 1, 2, 5, 4, 3, 6, 7, 8));
+        super(Pattern.of(0, 1, 2, 5, 4, 3, 6, 7, 8), Signature.of(FragmentType.ENTITY, EntityQuaternionTrick::headRotation));
     }
 
-    @Override
-    public Fragment distort(SpellContext ctx, List<Fragment> fragments) throws BlunderException {
-        var entity = expectInput(fragments, FragmentType.ENTITY, 0).getEntity(ctx)
+    public Fragment headRotation(SpellContext ctx, EntityFragment entityFragment) throws BlunderException {
+        var entity = entityFragment.getEntity(ctx)
                 .orElseThrow(() -> new IncompatibleSourceBlunder(this));
 
         return new QuaternionFragment(getEntityRotation(entity));

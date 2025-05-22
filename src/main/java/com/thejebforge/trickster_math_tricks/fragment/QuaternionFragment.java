@@ -1,5 +1,8 @@
 package com.thejebforge.trickster_math_tricks.fragment;
 
+import com.thejebforge.trickster_lisp.transpiler.ast.SExpression;
+import com.thejebforge.trickster_lisp.transpiler.ast.builder.CallBuilder;
+import com.thejebforge.trickster_lisp.transpiler.fragment.FragmentToAST;
 import dev.enjarai.trickster.spell.Fragment;
 import dev.enjarai.trickster.spell.blunder.BlunderException;
 import dev.enjarai.trickster.spell.blunder.IncompatibleTypesBlunder;
@@ -19,8 +22,10 @@ import org.joml.Quaterniond;
 import org.joml.Quaterniondc;
 import org.joml.Vector3d;
 
+import java.util.Optional;
+
 public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
-        AddableFragment, MultiplicableFragment, DivisibleFragment, SubtractableFragment {
+        AddableFragment, MultiplicableFragment, DivisibleFragment, SubtractableFragment, FragmentToAST {
     public static final Endec<Quaterniondc> QUATERNION_ENDEC = Endec.of(
             ((ctx, serializer, value) -> {
                 serializer.writeDouble(ctx, value.x());
@@ -61,19 +66,14 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
     }
 
     @Override
-    public boolean asBoolean() {
-        return true;
-    }
-
-    @Override
     public int getWeight() {
         return 4;
     }
 
     @Override
     public AddableFragment add(Fragment fragment) throws BlunderException {
-        if (fragment instanceof QuaternionFragment other) {
-            return new QuaternionFragment(quaternion.add(other.quaternion, new Quaterniond()));
+        if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
+            return new QuaternionFragment(quaternion.add(quat, new Quaterniond()));
         }
 
         throw new IncompatibleTypesBlunder(Tricks.ADD);
@@ -81,8 +81,8 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
 
     @Override
     public MultiplicableFragment multiply(Fragment fragment) throws BlunderException {
-        if (fragment instanceof QuaternionFragment other) {
-            return new QuaternionFragment(quaternion.mul(other.quaternion, new Quaterniond()));
+        if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
+            return new QuaternionFragment(quaternion.mul(quat, new Quaterniond()));
         }
 
         if (fragment instanceof NumberFragment other) {
@@ -98,8 +98,8 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
 
     @Override
     public DivisibleFragment divide(Fragment fragment) throws BlunderException {
-        if (fragment instanceof QuaternionFragment other) {
-            return new QuaternionFragment(quaternion.div(other.quaternion, new Quaterniond()));
+        if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
+            return new QuaternionFragment(quaternion.div(quat, new Quaterniond()));
         }
 
         throw new IncompatibleTypesBlunder(Tricks.DIVIDE);
@@ -107,10 +107,20 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
 
     @Override
     public SubtractableFragment subtract(Fragment fragment) throws BlunderException {
-        if (fragment instanceof QuaternionFragment other) {
-            return new QuaternionFragment(quaternion.add(other.quaternion.mul(-1, new Quaterniond()), new Quaterniond()));
+        if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
+            return new QuaternionFragment(quaternion.add(quat.mul(-1, new Quaterniond()), new Quaterniond()));
         }
 
         throw new IncompatibleTypesBlunder(Tricks.SUBTRACT);
+    }
+
+    @Override
+    public Optional<SExpression> trickster_lisp$convert(boolean preserveSpellParts) {
+        return Optional.of(CallBuilder.builder("quat")
+                .addNumber(quaternion.x())
+                .addNumber(quaternion.y())
+                .addNumber(quaternion.z())
+                .addNumber(quaternion.w())
+                .build());
     }
 }

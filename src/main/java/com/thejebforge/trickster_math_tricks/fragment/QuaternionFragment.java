@@ -1,8 +1,5 @@
 package com.thejebforge.trickster_math_tricks.fragment;
 
-import com.thejebforge.trickster_lisp.transpiler.ast.SExpression;
-import com.thejebforge.trickster_lisp.transpiler.ast.builder.CallBuilder;
-import com.thejebforge.trickster_lisp.transpiler.fragment.FragmentToAST;
 import dev.enjarai.trickster.spell.Fragment;
 import dev.enjarai.trickster.spell.blunder.BlunderException;
 import dev.enjarai.trickster.spell.blunder.IncompatibleTypesBlunder;
@@ -22,10 +19,8 @@ import org.joml.Quaterniond;
 import org.joml.Quaterniondc;
 import org.joml.Vector3d;
 
-import java.util.Optional;
-
 public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
-        AddableFragment, MultiplicableFragment, DivisibleFragment, SubtractableFragment, FragmentToAST {
+        AddableFragment, MultiplicableFragment, DivisibleFragment, SubtractableFragment {
     public static final Endec<Quaterniondc> QUATERNION_ENDEC = Endec.of(
             ((ctx, serializer, value) -> {
                 serializer.writeDouble(ctx, value.x());
@@ -112,15 +107,5 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
         }
 
         throw new IncompatibleTypesBlunder(Tricks.SUBTRACT);
-    }
-
-    @Override
-    public Optional<SExpression> trickster_lisp$convert(boolean preserveSpellParts) {
-        return Optional.of(CallBuilder.builder("quat")
-                .addNumber(quaternion.x())
-                .addNumber(quaternion.y())
-                .addNumber(quaternion.z())
-                .addNumber(quaternion.w())
-                .build());
     }
 }

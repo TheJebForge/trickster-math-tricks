@@ -17,6 +17,16 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	mavenLocal()
+
+	maven {
+		url "https://maven.pkg.github.com/TheJebForge/trickster-lisp"
+		credentials {
+			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+		}
+	}
+
 	maven {
 		url 'https://maven.enjarai.dev/releases'
 	}
@@ -49,6 +59,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "dev.enjarai:trickster:${project.trickster_version}"
+
+	modImplementation "com.thejebforge.trickster_lisp:trickster_lisp:${project.lisp_version}"
 
 	dependencies {
 		modImplementation "io.wispforest:owo-lib:${project.owo_version}"
@@ -110,7 +122,7 @@ modrinth {
 	versionName = "${project.version} for Trickster ${project.trickster_version}"
 	versionNumber = "${project.version}" // The (preferably SemVer) version of the mod. If not specified, it'll use the `version` declaration
 	uploadFile = remapJar // Tells Minotaur to use the remapped jar
-	gameVersions = ["${project.minecraft_version}", "1.21.1"] as Iterable<? extends String> // An array of game versions the version supports
+	gameVersions = ["${project.minecraft_version}"] as Iterable<? extends String> // An array of game versions the version supports
 	loaders = ['fabric'] // Self-explanatory.
 	dependencies = [
 			new ModDependency('ZdEfcqro', 'required') // Creates a new required dependency on Fabric API

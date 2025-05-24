@@ -1,5 +1,6 @@
 package com.thejebforge.trickster_math_tricks.trick.common;
 
+import com.thejebforge.trickster_math_tricks.fragment.ModFragmentTypes;
 import com.thejebforge.trickster_math_tricks.fragment.QuaternionFragment;
 import com.thejebforge.trickster_math_tricks.trick.ModTricks;
 import com.thejebforge.trickster_math_tricks.trick.base.MathDistortTrick;
@@ -9,21 +10,16 @@ import dev.enjarai.trickster.spell.SpellContext;
 import dev.enjarai.trickster.spell.blunder.BlunderException;
 import dev.enjarai.trickster.spell.blunder.IncompatibleTypesBlunder;
 import dev.enjarai.trickster.spell.fragment.NumberFragment;
+import dev.enjarai.trickster.spell.type.Signature;
 
 import java.util.List;
 
-public class ExtractWTrick extends MathDistortTrick {
+public class ExtractWTrick extends MathDistortTrick<ExtractWTrick> {
     public ExtractWTrick() {
-        super(Pattern.of(0, 2, 5));
+        super(Pattern.of(0, 2, 5), Signature.of(ModFragmentTypes.QUATERNION, ExtractWTrick::extract));
     }
 
-    @Override
-    public Fragment distort(SpellContext spellContext, List<Fragment> list) throws BlunderException {
-        var input = expectInput(list, 0);
-
-        return switch (input) {
-            case QuaternionFragment quaternion -> new NumberFragment(quaternion.quaternion().w());
-            case null, default -> throw new IncompatibleTypesBlunder(ModTricks.EXTRACT_W_TRICK);
-        };
+    public Fragment extract(SpellContext spellContext, QuaternionFragment quat) throws BlunderException {
+        return new NumberFragment(quat.quaternion().w());
     }
 }

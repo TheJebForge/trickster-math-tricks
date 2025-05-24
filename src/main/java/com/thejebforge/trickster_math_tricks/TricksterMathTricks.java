@@ -1,9 +1,11 @@
 package com.thejebforge.trickster_math_tricks;
 
 import com.thejebforge.trickster_math_tricks.fragment.ModFragmentTypes;
+import com.thejebforge.trickster_math_tricks.lisp.ModASTConverters;
 import com.thejebforge.trickster_math_tricks.trick.ModTricks;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,7 @@ public class TricksterMathTricks implements ModInitializer {
 	public void onInitialize() {
 		ModFragmentTypes.register();
 		ModTricks.register();
+		if (FabricLoader.getInstance().isModLoaded("trickster_lisp")) ModASTConverters.register();
 	}
 
 	public static Identifier id(String path) {

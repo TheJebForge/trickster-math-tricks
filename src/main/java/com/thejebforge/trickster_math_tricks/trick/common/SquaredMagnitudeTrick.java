@@ -10,18 +10,16 @@ import dev.enjarai.trickster.spell.blunder.BlunderException;
 import dev.enjarai.trickster.spell.blunder.IncompatibleTypesBlunder;
 import dev.enjarai.trickster.spell.fragment.NumberFragment;
 import dev.enjarai.trickster.spell.fragment.VectorFragment;
+import dev.enjarai.trickster.spell.type.Signature;
 
 import java.util.List;
 
-public class SquaredMagnitudeTrick extends MathDistortTrick {
+public class SquaredMagnitudeTrick extends MathDistortTrick<SquaredMagnitudeTrick> {
     public SquaredMagnitudeTrick() {
-        super(Pattern.of(3, 4, 5, 2, 4, 1, 0, 4));
+        super(Pattern.of(3, 4, 5, 2, 4, 1, 0, 4), Signature.of(ANY, SquaredMagnitudeTrick::sqrMagnitude));
     }
 
-    @Override
-    public Fragment distort(SpellContext spellContext, List<Fragment> list) throws BlunderException {
-        var input = expectInput(list, 0);
-
+    public Fragment sqrMagnitude(SpellContext spellContext, Fragment input) throws BlunderException {
         return switch (input) {
             case QuaternionFragment quaternion -> new NumberFragment(quaternion.quaternion().lengthSquared());
             case VectorFragment vector -> new NumberFragment(vector.vector().lengthSquared());

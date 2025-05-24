@@ -61,19 +61,14 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
     }
 
     @Override
-    public boolean asBoolean() {
-        return true;
-    }
-
-    @Override
     public int getWeight() {
         return 4;
     }
 
     @Override
     public AddableFragment add(Fragment fragment) throws BlunderException {
-        if (fragment instanceof QuaternionFragment other) {
-            return new QuaternionFragment(quaternion.add(other.quaternion, new Quaterniond()));
+        if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
+            return new QuaternionFragment(quaternion.add(quat, new Quaterniond()));
         }
 
         throw new IncompatibleTypesBlunder(Tricks.ADD);
@@ -81,8 +76,8 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
 
     @Override
     public MultiplicableFragment multiply(Fragment fragment) throws BlunderException {
-        if (fragment instanceof QuaternionFragment other) {
-            return new QuaternionFragment(quaternion.mul(other.quaternion, new Quaterniond()));
+        if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
+            return new QuaternionFragment(quaternion.mul(quat, new Quaterniond()));
         }
 
         if (fragment instanceof NumberFragment other) {
@@ -98,8 +93,8 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
 
     @Override
     public DivisibleFragment divide(Fragment fragment) throws BlunderException {
-        if (fragment instanceof QuaternionFragment other) {
-            return new QuaternionFragment(quaternion.div(other.quaternion, new Quaterniond()));
+        if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
+            return new QuaternionFragment(quaternion.div(quat, new Quaterniond()));
         }
 
         throw new IncompatibleTypesBlunder(Tricks.DIVIDE);
@@ -107,8 +102,8 @@ public record QuaternionFragment(Quaterniondc quaternion) implements Fragment,
 
     @Override
     public SubtractableFragment subtract(Fragment fragment) throws BlunderException {
-        if (fragment instanceof QuaternionFragment other) {
-            return new QuaternionFragment(quaternion.add(other.quaternion.mul(-1, new Quaterniond()), new Quaterniond()));
+        if (fragment instanceof QuaternionFragment(Quaterniondc quat)) {
+            return new QuaternionFragment(quaternion.add(quat.mul(-1, new Quaterniond()), new Quaterniond()));
         }
 
         throw new IncompatibleTypesBlunder(Tricks.SUBTRACT);

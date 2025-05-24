@@ -29,12 +29,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModTricks {
-    private static final Map<Pattern, Trick> LOOKUP = new HashMap<>();
+    private static final Map<Pattern, Trick<?>> LOOKUP = new HashMap<>();
 
-    public static final RegistryKey<Registry<Trick>> REGISTRY_KEY = RegistryKey.ofRegistry(TricksterMathTricks.id("trick"));
-    public static final Registry<Trick> REGISTRY = FabricRegistryBuilder.from(new SimpleRegistry<>(REGISTRY_KEY, Lifecycle.stable()) {
+    public static final RegistryKey<Registry<Trick<?>>> REGISTRY_KEY = RegistryKey.ofRegistry(TricksterMathTricks.id("trick"));
+    public static final Registry<Trick<?>> REGISTRY = FabricRegistryBuilder.from(new SimpleRegistry<>(REGISTRY_KEY, Lifecycle.stable()) {
         @Override
-        public RegistryEntry.Reference<Trick> add(RegistryKey<Trick> key, Trick value, RegistryEntryInfo info) {
+        public RegistryEntry.Reference<Trick<?>> add(RegistryKey<Trick<?>> key, Trick<?> value, RegistryEntryInfo info) {
             if (LOOKUP.containsKey(value.getPattern())) {
                 TricksterMathTricks.LOGGER.warn(
                         "WARNING: Pattern like that is already defined! ({} overrode {})",
@@ -64,12 +64,12 @@ public class ModTricks {
     public static final CasterQuaternionTrick CASTER_QUATERNION_TRICK = register("caster_quaternion", new CasterQuaternionTrick());
     public static final EntityQuaternionTrick ENTITY_QUATERNION_TRICK = register("entity_quaternion", new EntityQuaternionTrick());
 
-    private static <T extends Trick> T register(String path, T trick) {
+    private static <T extends Trick<?>> T register(String path, T trick) {
         return Registry.register(REGISTRY, TricksterMathTricks.id(path), trick);
     }
 
     @Nullable
-    public static Trick lookup(Pattern pattern) {
+    public static Trick<?> lookup(Pattern pattern) {
         return LOOKUP.get(pattern);
     }
 

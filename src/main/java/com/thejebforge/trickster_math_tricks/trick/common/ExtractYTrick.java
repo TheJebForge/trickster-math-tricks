@@ -10,18 +10,16 @@ import dev.enjarai.trickster.spell.blunder.BlunderException;
 import dev.enjarai.trickster.spell.blunder.IncompatibleTypesBlunder;
 import dev.enjarai.trickster.spell.fragment.NumberFragment;
 import dev.enjarai.trickster.spell.fragment.VectorFragment;
+import dev.enjarai.trickster.spell.type.Signature;
 
 import java.util.List;
 
-public class ExtractYTrick extends MathDistortTrick {
+public class ExtractYTrick extends MathDistortTrick<ExtractYTrick> {
     public ExtractYTrick() {
-        super(Pattern.of(0, 4, 7));
+        super(Pattern.of(0, 4, 7), Signature.of(ANY, ExtractYTrick::extract));
     }
 
-    @Override
-    public Fragment distort(SpellContext spellContext, List<Fragment> list) throws BlunderException {
-        var input = expectInput(list, 0);
-
+    public Fragment extract(SpellContext spellContext, Fragment input) throws BlunderException {
         return switch (input) {
             case QuaternionFragment quaternion -> new NumberFragment(quaternion.quaternion().y());
             case VectorFragment vector -> new NumberFragment(vector.vector().y());

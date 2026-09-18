@@ -3,6 +3,7 @@ package com.thejebforge.trickster_math_tricks;
 import com.thejebforge.trickster_math_tricks.fragment.ModFragmentTypes;
 import com.thejebforge.trickster_math_tricks.revision.ModRevisions;
 import com.thejebforge.trickster_math_tricks.trick.ModTricks;
+import com.thejebforge.trickster_math_tricks.trick.VectorOverloads;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ public class TricksterMathTricks implements ModInitializer {
 	public void onInitialize() {
 		ModFragmentTypes.register();
 		ModTricks.register();
+		VectorOverloads.register();
 		ModRevisions.register();
 	}
 

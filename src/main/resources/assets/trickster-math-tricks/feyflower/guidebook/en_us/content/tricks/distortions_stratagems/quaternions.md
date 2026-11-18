@@ -17,42 +17,42 @@ This category provides specialized functionality for Quaternions.
 
 ;;;;;
 
-<|trick@trickster:templates|trick-id=trickster:extract_x|>
+#<trickster:trick id="trickster:extract_x" />
 
 Returns the X component of the given fragment.
 
 ;;;;;
 
-<|trick@trickster:templates|trick-id=trickster:extract_y|>
+#<trickster:trick id="trickster:extract_y" />
 
 Returns the Y component of the given fragment.
 
 ;;;;;
 
-<|trick@trickster:templates|trick-id=trickster:extract_z|>
+#<trickster:trick id="trickster:extract_z" />
 
 Returns the Z component of the given fragment.
 
 ;;;;;
 
-<|trick@trickster:templates|trick-id=trickster-math-tricks:extract_w|>
+#<trickster:trick id="trickster-math-tricks:extract_w" />
 
 Returns the W component of the given fragment.
 
 ;;;;;
 
-<|trick@trickster:templates|trick-id=trickster:normalize|>
+#<trickster:trick id="trickster:normalize" />
 
 Normalizes the given fragment to a length of one.
 
 ;;;;;
 
-<|trick@trickster:templates|trick-id=trickster:length|>
+#<trickster:trick id="trickster:length" />
 
 Returns the length of the given fragment.
 
 ;;;;;
 
-<|trick@trickster:templates|trick-id=trickster-math-tricks:squared_magnitude|>
+#<trickster:trick id="trickster-math-tricks:squared_magnitude" />
 
 Returns the squared length of the given fragment.

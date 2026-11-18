@@ -5,7 +5,6 @@ import com.thejebforge.trickster_math_tricks.TricksterMathTricks;
 import com.thejebforge.trickster_math_tricks.fragment.QuaternionFragment;
 import dev.enjarai.trickster.spell.Pattern;
 import dev.enjarai.trickster.spell.fragment.NumberFragment;
-import dev.enjarai.trickster.spell.revision.ConstantRevision;
 import dev.enjarai.trickster.spell.revision.Revision;
 import dev.enjarai.trickster.spell.revision.Revisions;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
@@ -43,11 +42,11 @@ public class ModRevisions {
             Revisions.REGISTRY, TricksterMathTricks.id("main_revision"), new MathLibRevision()
     );
 
-    public static Revision PI_CONSTANT = register("pi", new ConstantRevision(
+    public static Revision PI_CONSTANT = register("pi", new MathConstantRevision(
             Pattern.of(6, 0, 2, 8, 5),
             new NumberFragment(Math.PI)
     ));
-    public static Revision IDENTITY_QUATERNION = register("quat_ident", new ConstantRevision(
+    public static Revision IDENTITY_QUATERNION = register("quat_ident", new MathConstantRevision(
             Pattern.of(3, 4, 8, 7, 6, 3),
             new QuaternionFragment(new Quaterniond())
     ));
